@@ -1,0 +1,26 @@
+*.DS_Store
+HACS-dataset
+# .DS_Store
+Pedestrian-Tracking
+dataset
+datasets
+model_reduction
+models
+env
+venv
+YOLO
+ven
+
+*.MOV
+*.mp4
+*.avi
+*.jpeg
+*.jpg
+*.png
+*.zip
+
+client/detected_images.zip
+final/ssd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz
+*.data-00000-of-00001
+checkpoint
+*.index
