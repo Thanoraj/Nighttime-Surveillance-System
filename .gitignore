@@ -6,9 +6,11 @@ dataset
 datasets
 model_reduction
 models
+YOLO
+
 env
 venv
-YOLO
+.venv
 ven
 
 *.MOV
