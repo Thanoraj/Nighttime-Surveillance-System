@@ -143,7 +143,7 @@ def capture():
 
 
 def initialize():
-    global model
+    global model, cap
     model = hub.load("https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2")
     input_pin = 18
 
@@ -161,6 +161,7 @@ def initialize():
                 if value == GPIO.LOW and not capturing:
                     print("Starting video capture")
                     cap = cv2.VideoCapture(0)
+
                     capturing = True
                     ThreadPoolExecutor(max_workers=1).submit(capture)
                 elif value == GPIO.HIGH and capturing:
