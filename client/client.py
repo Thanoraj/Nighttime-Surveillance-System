@@ -58,8 +58,8 @@ def detect_faces(image, frame_count, human_count):
         cv2.imwrite(image_path, face)
 
         # Replace with your server URL
-        # server_url = "http://192.168.8.157:5001/upload"
-        # send_image(image_path, server_url)
+        server_url = "http://192.168.8.157:5001/upload"
+        send_image(image_path, server_url)
 
     return faces
 
