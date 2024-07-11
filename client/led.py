@@ -1,21 +1,31 @@
-import Jetson.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 # Pin Definitions
-led_pin = 18  # BOARD pin 12, BCM pin 18
+input_pin = 18  # BCM pin 18, BOARD pin 12
 
-# Set up the GPIO channel
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(led_pin, GPIO.OUT, initial=GPIO.LOW)
 
-# Blink the LED
-try:
-    while True:
-        GPIO.output(led_pin, GPIO.HIGH)
-        time.sleep(1)
-        GPIO.output(led_pin, GPIO.LOW)
-        time.sleep(1)
-except KeyboardInterrupt:
-    pass
-finally:
-    GPIO.cleanup()
+def main():
+    prev_value = None
+
+    # Pin Setup:
+    GPIO.setmode(GPIO.BCM)  # BCM pin-numbering scheme from Raspberry Pi
+    GPIO.setup(input_pin, GPIO.IN)  # set pin as an input pin
+    print("Starting demo now! Press CTRL+C to exit")
+    try:
+        while True:
+            value = GPIO.input(input_pin)
+            if value != prev_value:
+                if value == GPIO.HIGH:
+                    value_str = "HIGH"
+                else:
+                    value_str = "LOW"
+                print("Value read from pin {} : {}".format(input_pin, value_str))
+                prev_value = value
+            time.sleep(1)
+    finally:
+        GPIO.cleanup()
+
+
+if __name__ == "__main__":
+    main()
