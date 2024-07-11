@@ -128,7 +128,7 @@ def process_video(cap, start_time, num_workers=4):
 
 
 def capture():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     if not cap.isOpened():
         print("Error: Could not open video device.")
         return
@@ -160,7 +160,7 @@ def initialize():
             if value != prev_value:
                 if value == GPIO.LOW and not capturing:
                     print("Starting video capture")
-                    cap = cv2.VideoCapture(0)
+                    cap = cv2.VideoCapture(1)
 
                     capturing = True
                     ThreadPoolExecutor(max_workers=1).submit(capture)
@@ -171,6 +171,9 @@ def initialize():
                     capturing = False
                 prev_value = value
             time.sleep(1)
+
+    except Exception as e:
+        print(e)
     finally:
         GPIO.cleanup()
 
