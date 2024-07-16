@@ -185,6 +185,11 @@ def initialize():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(input_pin, GPIO.IN)
 
+    if os.path.exists("frames"):
+        shutil.rmtree("frames")
+        shutil.rmtree("images")
+        shutil.rmtree("faces")
+
     os.makedirs("frames", exist_ok=True)
     os.makedirs("images", exist_ok=True)
     os.makedirs("faces", exist_ok=True)
