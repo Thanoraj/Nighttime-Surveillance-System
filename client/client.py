@@ -155,6 +155,11 @@ def capture():
     #         break
 
     # cap = cv2.VideoCapture(cam_index)
+
+    # Set video frame dimensions (optional)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
     if not cap.isOpened():
         print("Error: Could not open video device.")
         return
