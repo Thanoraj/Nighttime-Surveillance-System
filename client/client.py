@@ -193,6 +193,7 @@ def initialize():
                     cap = cv2.VideoCapture(0)
 
                     capturing = True
+                    print("camera connected")
                     ThreadPoolExecutor(max_workers=1).submit(capture)
                 elif value == GPIO.HIGH and capturing:
                     print("Stopping video capture")
