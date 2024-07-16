@@ -1,3 +1,4 @@
+from cmath import log
 import cv2
 import time
 
@@ -18,6 +19,7 @@ out = cv2.VideoWriter("output.mp4", fourcc, 20.0, (640, 480))
 
 start_time = time.time()
 
+print("Started Capturing")
 while True:
     ret, frame = cap.read()
     if not ret:
@@ -29,6 +31,8 @@ while True:
     # Break the loop after 5 seconds
     if time.time() - start_time > 60:
         break
+
+print("Finished Capturing")
 
 # Release everything when done
 cap.release()
