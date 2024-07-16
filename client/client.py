@@ -104,6 +104,7 @@ def producer(cap, frame_queue, start_time, duration=30, every_n_frame=5):
 
 
 def process_frame(frame, frame_count):
+    print("ddvdko")
     gray_img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     equalized_image = cv2.equalizeHist(gray_img)
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
