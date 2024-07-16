@@ -128,7 +128,7 @@ def process_video(cap, start_time, num_workers=4):
 
 
 def capture():
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
     if not cap.isOpened():
         print("Error: Could not open video device.")
         return
@@ -145,9 +145,13 @@ def capture():
 def initialize():
     global model, cap
 
+    t1 = time.time()
     # Load the model from the local directory
     local_model_dir = "ssd_mobilenet_v2"
     model = hub.load(local_model_dir)
+
+    t2 = time.time()
+    print(f"SSD loaded in {t2-t1}s")
 
     input_pin = 18
     prev_value = None
@@ -163,7 +167,7 @@ def initialize():
             if value != prev_value:
                 if value == GPIO.LOW and not capturing:
                     print("Starting video capture")
-                    cap = cv2.VideoCapture(1)
+                    cap = cv2.VideoCapture(0)
 
                     capturing = True
                     ThreadPoolExecutor(max_workers=1).submit(capture)
