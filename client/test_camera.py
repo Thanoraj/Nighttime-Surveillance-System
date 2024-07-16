@@ -13,7 +13,6 @@ def test_video_device(index):
         if not ret:
             print(f"Error: Could not read frame from device {index}.")
         cap.release()
-        cv2.destroyAllWindows()
         return True
 
 
