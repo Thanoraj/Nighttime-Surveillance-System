@@ -29,7 +29,7 @@ while True:
     out.write(frame)  # Write the frame to the file
 
     # Break the loop after 5 seconds
-    if time.time() - start_time > 60:
+    if time.time() - start_time > 5:
         break
 
 print("Finished Capturing")
