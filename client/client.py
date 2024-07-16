@@ -144,12 +144,12 @@ def test_video_device(index):
 
 def capture():
 
-    cam_index = 0
-    # Test both devices
-    for index in range(2):
-        if test_video_device(index):
-            cam_index = index
-            break
+    # cam_index = 0
+    # # Test both devices
+    # for index in range(2):
+    #     if test_video_device(index):
+    #         cam_index = index
+    #         break
 
     # cap = cv2.VideoCapture(cam_index)
     if not cap.isOpened():
