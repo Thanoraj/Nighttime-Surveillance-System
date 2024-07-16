@@ -42,9 +42,7 @@ def detect_faces(image, frame_count, human_count):
 
     for i, (x, y, w, h) in enumerate(faces):
         face = image[y : y + h, x : x + w]
-        image_path = os.path.join(
-            "faces", "Thanu", f"faces_{frame_count}_{human_count}_{i}.jpg"
-        )
+        image_path = os.path.join("faces", f"faces_{frame_count}_{human_count}_{i}.jpg")
         cv2.imwrite(image_path, face)
         server_url = "http://192.168.8.157:5001/upload"
         send_image(image_path, server_url)
