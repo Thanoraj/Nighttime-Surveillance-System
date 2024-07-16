@@ -1,3 +1,4 @@
+from cmath import log
 import json
 import shutil
 import tensorflow as tf
@@ -41,6 +42,7 @@ def detect_faces(image, frame_count, human_count):
     )
 
     for i, (x, y, w, h) in enumerate(faces):
+        print("Face detected")
         face = image[y : y + h, x : x + w]
         image_path = os.path.join("faces", f"faces_{frame_count}_{human_count}_{i}.jpg")
         cv2.imwrite(image_path, face)
