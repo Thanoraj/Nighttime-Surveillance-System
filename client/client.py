@@ -41,6 +41,8 @@ def detect_faces(image, frame_count, human_count):
         gray, scaleFactor=1.3, minNeighbors=4, minSize=(30, 30)
     )
 
+    print(len(faces))
+
     for i, (x, y, w, h) in enumerate(faces):
         print("Face detected")
         face = image[y : y + h, x : x + w]
