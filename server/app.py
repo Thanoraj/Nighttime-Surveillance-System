@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -21,6 +22,7 @@ def upload_file():
             print("No selected file")
             return "No selected file", 400
         print(file.filename)
+        os.makedirs("uploads", exist_ok=True)
         file.save("uploads/" + file.filename)
         return jsonify({"success": "File successfully uploaded"}), 200
     except Exception as e:
