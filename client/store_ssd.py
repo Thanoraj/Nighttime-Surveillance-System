@@ -3,7 +3,7 @@ import tensorflow_hub as hub
 import os
 
 # Directory to save the model
-local_model_dir = "./ssd_mobilenet_v2"
+local_model_dir = "ssd_mobilenet_v2"
 
 # Download and save the model
 if not os.path.exists(local_model_dir):

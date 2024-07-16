@@ -144,9 +144,12 @@ def capture():
 
 def initialize():
     global model, cap
-    model = hub.load("https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2")
-    input_pin = 18
 
+    # Load the model from the local directory
+    local_model_dir = "ssd_mobilenet_v2"
+    model = hub.load(local_model_dir)
+
+    input_pin = 18
     prev_value = None
     capturing = False
     cap = None
