@@ -18,5 +18,4 @@ def test_video_device(index):
 
 # Test both devices
 for index in range(2):
-    if test_video_device(index):
-        break
+    test_video_device(index)
