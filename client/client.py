@@ -104,7 +104,6 @@ def producer(cap, frame_queue, start_time, duration=30, every_n_frame=5):
 
 
 def process_frame(frame, frame_count):
-    print("ddvdko")
     gray_img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     equalized_image = cv2.equalizeHist(gray_img)
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
@@ -185,6 +184,10 @@ def initialize():
 
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(input_pin, GPIO.IN)
+
+    os.makedirs("frames", exist_ok=True)
+    os.makedirs("images", exist_ok=True)
+    os.makedirs("faces", exist_ok=True)
     print("Starting surveillance")
     try:
         while True:
