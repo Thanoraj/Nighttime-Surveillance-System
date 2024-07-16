@@ -116,6 +116,7 @@ def process_frame(frame, frame_count):
 
 
 def process_video(cap, start_time, num_workers=4):
+    print("Processing video")
     frame_queue = queue.Queue(maxsize=20)
     producer_executor = ThreadPoolExecutor(max_workers=1)
     producer_executor.submit(producer, cap, frame_queue, start_time)
