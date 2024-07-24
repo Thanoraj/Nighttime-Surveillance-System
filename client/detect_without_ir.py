@@ -170,9 +170,9 @@ def capture():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-    # if not cap.isOpened():
-    #     print("Error: Could not open video device.")
-    #     return
+    if not cap.isOpened():
+        print("Error: Could not open video device.")
+        return
 
     print("Camera connected")
     start_time = time.time()
