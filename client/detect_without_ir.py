@@ -195,13 +195,7 @@ def initialize():
     t2 = time.time()
     print(f"SSD loaded in {t2-t1}s")
 
-    input_pin = 18
-    prev_value = None
-    capturing = False
     cap = None
-
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(input_pin, GPIO.IN)
 
     if os.path.exists("frames"):
         shutil.rmtree("frames")
