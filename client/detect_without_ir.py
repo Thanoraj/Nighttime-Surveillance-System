@@ -156,7 +156,7 @@ def test_video_device(index):
         return True
 
 
-def capture():
+def capture(cap):
     # cam_index = 0
     # # Test both devices
     # for index in range(2):
@@ -167,8 +167,8 @@ def capture():
     # cap = cv2.VideoCapture(cam_index)
 
     # Set video frame dimensions (optional)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
     if not cap.isOpened():
         print("Error: Could not open video device.")
@@ -209,11 +209,14 @@ def initialize():
 
     try:
         cap = cv2.VideoCapture(0)
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
         if not cap.isOpened():
             print("Error: Could not open video device.")
             exit()
         print("camera connected")
-        ThreadPoolExecutor(max_workers=1).submit(capture)
+        capture(cap)
 
     except Exception as e:
         print(e)
