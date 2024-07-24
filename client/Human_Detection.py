@@ -47,3 +47,5 @@ def detect_human(image_path, frame_count):
             cropped_image.save(cropped_image_path)
             count += 1
 
+if __name__ == "__main__":
+    detect_human("IMG_3913.jpg",1)
