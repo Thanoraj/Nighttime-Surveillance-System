@@ -1,0 +1,6 @@
+deepface
+flask
+flask-cors
+pickle
+scikit-learn
+tf-keras
