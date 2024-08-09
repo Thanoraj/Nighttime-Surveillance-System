@@ -5,6 +5,10 @@ from deepface import DeepFace
 from sklearn.metrics.pairwise import cosine_similarity
 import pickle
 from shutil import copy2
+from PIL import Image
+import numpy as np
+from mtcnn import MTCNN
+
 
 from firebase_services import (
     save_url_to_firestore,
@@ -16,8 +20,39 @@ from firebase_services import (
 class DeepFacePrediction:
     def __init__(self, embedding_path="embeddings.pkl"):
         self.predicting = False
+        self.detector = MTCNN()
+
+        self.false_positive = 0
+
         self.load_embeddings(embedding_path)
+        self.sent = False
         print("Model loaded")
+
+    # Initialize MTCNN detector
+
+    # Function to extract face from an image
+    def extract_face(self, filename, required_size=(160, 160)):
+        image = Image.open(filename)
+        image = image.convert("RGB")
+        pixels = np.asarray(image)
+        results = self.detector.detect_faces(pixels)
+        if results:
+            x1, y1, width, height = results[0]["box"]
+            x1, y1 = abs(x1), abs(y1)
+            x2, y2 = x1 + width, y1 + height
+            face = pixels[y1:y2, x1:x2]
+            image = Image.fromarray(face)
+            # image = image.resize(required_size)
+            image.save(filename)
+            # face_array = np.asarray(image)
+            return filename
+        else:
+            self.false_positive += 1
+            os.makedirs("false_positive", exist_ok=True)
+
+            image.save(f"false_positive/img{self.false_positive}.jpg")
+
+            return None
 
     # Load embeddings from a file
     def load_embeddings(self, filename):
@@ -52,6 +87,10 @@ class DeepFacePrediction:
     def identify_person(
         self, input_image, model_name="VGG-Face", metric="cosine", threshold=0.4
     ):
+
+        if not self.extract_face(input_image):
+            return None, None, None
+
         input_embedding = DeepFace.represent(
             img_path=input_image, model_name=model_name, enforce_detection=False
         )
@@ -69,6 +108,11 @@ class DeepFacePrediction:
                 best_person = person
 
         if best_similarity > threshold:
+            os.makedirs("Home dwellers", exist_ok=True)
+            intruder_image_path = os.path.join(
+                "Home dwellers", f"{best_person}_{os.path.basename(input_image)}"
+            )
+            copy2(input_image, intruder_image_path)
             return best_person, input_embedding, best_similarity
         else:
             # Save the image of the intruder
@@ -77,12 +121,17 @@ class DeepFacePrediction:
                 "Intruders", os.path.basename(input_image)
             )
             copy2(input_image, intruder_image_path)
-            Thread(target=self.sendAlert, args=(intruder_image_path)).start()
+            if not self.sent:
+                Thread(target=self.sendAlert, args=(intruder_image_path)).start()
+                self.sent = True
             return "Intruder", input_embedding, best_similarity
 
     def make_prediction(self):
         self.predicting = True
         images = os.listdir("uploads")
+
+        # for i in range(len(images)):
+        #     img = os.path.join("uploads", images[i])
 
         while len(images) != 0:
             img = os.path.join("uploads", images[0])
@@ -91,6 +140,7 @@ class DeepFacePrediction:
             os.remove(img)
             images = os.listdir("uploads")
 
+        print(self.false_positive)
         self.predicting = False
 
 

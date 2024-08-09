@@ -85,10 +85,12 @@ def detect_human(image_np, frame_count):
                 int(x2 * image_np.shape[1]),
             )
             cropped_image_np = image_np[y1:y2, x1:x2]
-            detect_faces(cropped_image_np, frame_count, count)
+            # detect_faces(cropped_image_np, frame_count, count)
             cropped_image = Image.fromarray(cropped_image_np)
             cropped_image_path = f"images/cropped_image{frame_count}_{count}.jpg"
             cropped_image.save(cropped_image_path)
+            server_url = "http://192.168.8.157:5001/upload"
+            send_image(cropped_image_path, server_url)
             count += 1
 
 
