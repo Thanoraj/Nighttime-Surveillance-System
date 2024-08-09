@@ -184,7 +184,7 @@ def initialize():
     t2 = time.time()
     print(f"SSD loaded in {t2-t1}s")
 
-    input_pin = 18
+    input_pin = 17
     prev_value = None
     capturing = False
     cap = None
