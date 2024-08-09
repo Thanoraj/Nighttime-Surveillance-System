@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
-
+from deepface_prediction import DeepFacePrediction
+from threading import Thread
 app = Flask(__name__)
 CORS(app)
 
@@ -24,6 +25,10 @@ def upload_file():
         print(file.filename)
         os.makedirs("uploads", exist_ok=True)
         file.save("uploads/" + file.filename)
+        print(df_model.predicting)
+        # if not df_model.predicting:
+        #     Thread(target=df_model.make_prediction).start()
+
         return jsonify({"success": "File successfully uploaded"}), 200
     except Exception as e:
         print(e)
@@ -31,4 +36,6 @@ def upload_file():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001)
+    df_model=DeepFacePrediction()
+    
+    app.run(host="0.0.0.0",debug=True, port=5001)

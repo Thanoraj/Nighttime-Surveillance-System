@@ -2,10 +2,12 @@ import os
 from deepface import DeepFace
 from sklearn.metrics.pairwise import cosine_similarity
 import pickle
+from shutil import copy2
 
 
 class DeepFacePrediction:
     def __init__(self, embedding_path="embeddings.pkl"):
+        self.predicting = False
         self.load_embeddings(embedding_path)
         print("Model loaded")
 
@@ -36,8 +38,25 @@ class DeepFacePrediction:
         if best_similarity > threshold:
             return best_person, input_embedding, best_similarity
         else:
+            # Save the image of the intruder
+            os.makedirs('Intruders', exist_ok=True)
+            intruder_image_path = os.path.join('Intruders', os.path.basename(input_image))
+            copy2(input_image, intruder_image_path)
             return "Intruder", input_embedding, best_similarity
+        
+    def make_prediction(self):
+        self.predicting = True
+        images=os.listdir("uploads")
 
+        while len(images)!= 0:
+            img = os.path.join("uploads", images[0])
+            prediction,_,_=self.identify_person(img)
+            print(f"Prediction for {images[0]} is {prediction}")
+            os.remove(img)
+            images = os.listdir("uploads")
+
+        self.predicting = False
+              
 
 if __name__ == "__main__":
     deepFacePrediction = DeepFacePrediction()
