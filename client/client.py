@@ -1,4 +1,3 @@
-from cmath import log
 import json
 import shutil
 import tensorflow as tf
@@ -11,7 +10,7 @@ import queue
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image
 import requests
-import Jetson.GPIO as GPIO
+import Rpi.GPIO as GPIO
 
 
 def send_image(image_path, server_url):

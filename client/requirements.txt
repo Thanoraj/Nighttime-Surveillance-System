@@ -1,0 +1,5 @@
+RPi.GPIO
+opencv-python
+tensorflow
+tensorflow-hub
+pillow
