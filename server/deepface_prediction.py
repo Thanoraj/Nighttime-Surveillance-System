@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import pickle
 from shutil import copy2
 
-from server.firebase_services import (
+from firebase_services import (
     save_url_to_firestore,
     send_notification,
     upload_image,

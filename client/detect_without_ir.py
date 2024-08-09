@@ -104,7 +104,7 @@ def detect_human(image_np, frame_count):
             count += 1
 
 
-def producer(cap, frame_queue, start_time, duration=30, every_n_frame=5):
+def producer(cap, frame_queue, start_time, duration=1, every_n_frame=5):
     frame_count = 0
     while cap.isOpened() and running:
         ret, frame = cap.read()
