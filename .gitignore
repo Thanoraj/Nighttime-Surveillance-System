@@ -27,4 +27,6 @@ final/ssd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz
 checkpoint
 *.index
 
+server/intruder-detector-ef9ab-firebase-adminsdk-jqbsf-7694bf284d.json
+
 __pycache__
