@@ -10,7 +10,7 @@ import queue
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image
 import requests
-import Rpi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 
 def send_image(image_path, server_url):
