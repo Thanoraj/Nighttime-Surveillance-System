@@ -12,6 +12,7 @@ import queue
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image
 import requests
+from store_ssd import install_ssd
 
 
 # Signal handler for graceful exit on keyboard interrupt
@@ -190,6 +191,8 @@ def initialize():
     t1 = time.time()
     # Load the model from the local directory
     local_model_dir = "ssd_mobilenet_v2"
+    if not os.path.exists(local_model_dir):
+        install_ssd()
     model = hub.load(local_model_dir)
 
     t2 = time.time()

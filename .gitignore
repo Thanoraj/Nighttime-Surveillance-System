@@ -22,6 +22,7 @@ ven
 *.zip
 
 client/detected_images.zip
+client/ssd_mobilenet_v2
 final/ssd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz
 *.data-00000-of-00001
 checkpoint
