@@ -1,3 +1,5 @@
+"""Facial recognition utilities based on DeepFace embeddings."""
+
 import datetime
 import os
 from threading import Thread
@@ -18,6 +20,8 @@ from firebase_services import (
 
 
 class DeepFacePrediction:
+    """Perform face recognition using pretrained DeepFace embeddings."""
+
     def __init__(self, embedding_path="embeddings.pkl"):
         self.predicting = False
         self.detector = MTCNN()
@@ -30,8 +34,8 @@ class DeepFacePrediction:
 
     # Initialize MTCNN detector
 
-    # Function to extract face from an image
     def extract_face(self, filename, required_size=(160, 160)):
+        """Extract a face from ``filename`` using MTCNN and return path."""
         image = Image.open(filename)
         image = image.convert("RGB")
         pixels = np.asarray(image)
@@ -56,12 +60,14 @@ class DeepFacePrediction:
 
     # Load embeddings from a file
     def load_embeddings(self, filename):
+        """Load stored face embeddings from ``filename``."""
         print(filename)
         with open(filename, "rb") as file:
             self.embeddings = pickle.load(file)
         return self.embeddings
 
     def sendAlert(self, image_path):
+        """Upload ``image_path`` to Firebase and send a push notification."""
         filename = os.path.basename(image_path)
 
         destination_blob_name = f"images/HodSqk9AoxhgG3SfgWVL/{filename}"
@@ -87,6 +93,7 @@ class DeepFacePrediction:
     def identify_person(
         self, input_image, model_name="VGG-Face", metric="cosine", threshold=0.4
     ):
+        """Return best matching person for ``input_image`` using DeepFace."""
 
         if not self.extract_face(input_image):
             return None, None, None
@@ -127,6 +134,7 @@ class DeepFacePrediction:
             return "Intruder", input_embedding, best_similarity
 
     def make_prediction(self):
+        """Process all images in the ``uploads`` folder sequentially."""
         self.predicting = True
         images = os.listdir("uploads")
 

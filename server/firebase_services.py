@@ -1,3 +1,5 @@
+"""Helper functions to interact with Firebase for storage and notifications."""
+
 from pyfcm import FCMNotification
 import firebase_admin
 from firebase_admin import credentials, storage, firestore, messaging
@@ -21,6 +23,7 @@ fcm = FCMNotification(
 
 
 def upload_image(image_path, destination_blob_name):
+    """Upload an image to Firebase Storage and return its public URL."""
     bucket = storage.bucket()
     blob = bucket.blob(destination_blob_name)
     blob.upload_from_filename(image_path)
@@ -29,12 +32,13 @@ def upload_image(image_path, destination_blob_name):
 
 
 def save_url_to_firestore(url, date_time, document_path):
+    """Persist ``url`` and ``date_time`` to Firestore at ``document_path``."""
     doc_ref = db.document(document_path)
     doc_ref.set({"image_url": url, "date_time": date_time})
 
 
 def send_notification(user_id, doc_id):
-
+    """Send a push notification to ``user_id`` about ``doc_id``."""
     registration_id_1 = "fMvhZMxpTZqmV5v-6xIEVo:APA91bGxaJn8DUeumYSrm9lE-832f8_KGqaWoE9GcAfNLYWiXkS8E3m58gdXtJxNVTzMhI3QNSIPInEBIRf2DZbZiKObRP2jFs6bMbCcdBMNIe8DqAfd6n1pvOMx3W7okqkuO2hYovpD"
     registration_id_2 = "d3mxt8FTQNCbkkybN58LfZ:APA91bEiTNOW0MAuE3zX8EaufLNeyB3GAWH4MQ6bFV2niPqrkdlAZcJo56aPYSc_XNPfSQiCTah9v61ml9t-jX5KsNkTtIKdOEmejecy2uK2bvaoV77Tmpr9I-z8o80UtneHEwReiU_o"
     message_title = "An intruder is detected"

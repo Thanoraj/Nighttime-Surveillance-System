@@ -1,3 +1,5 @@
+"""Split enhanced face images into train/val/test directories."""
+
 import os
 import shutil
 import random
@@ -13,6 +15,7 @@ test_dir = os.path.join("triplet_loss", "dataset", "test")
 
 # Function to create directories
 def create_dir(directory):
+    """Create ``directory`` if it does not already exist."""
     if not os.path.exists(directory):
         os.makedirs(directory)
 
@@ -29,6 +32,7 @@ val_ratio = 0.25
 
 # Function to split images
 def split_images(class_dir):
+    """Split images of one class into train/val/test folders."""
     # Create subdirectories in train, val, and test directories
     train_subdir = os.path.join(train_dir, class_dir)
     val_subdir = os.path.join(val_dir, class_dir)

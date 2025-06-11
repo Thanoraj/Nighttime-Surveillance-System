@@ -1,3 +1,5 @@
+"""Demo script to read values from an IR motion sensor."""
+
 import RPi.GPIO as GPIO
 import time
 
@@ -6,6 +8,7 @@ input_pin = 18  # BCM pin 18, BOARD pin 12
 
 
 def main():
+    """Poll the sensor and print status changes."""
     prev_value = None
 
     # Pin Setup:

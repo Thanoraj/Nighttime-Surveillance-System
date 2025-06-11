@@ -1,3 +1,5 @@
+"""Experimental socket server for Siamese-style face recognition."""
+
 import socket
 import os
 from tensorflow.keras import layers, metrics
@@ -79,6 +81,7 @@ class DistanceLayer(layers.Layer):
 
 
 def get_siamese_network(input_shape=(128, 128, 3)):
+    """Create the Siamese network architecture."""
     encoder = get_encoder(input_shape)
 
     # Input Layers for the images
@@ -105,7 +108,8 @@ siamese_network.summary()
 
 
 class SiameseModel(Model):
-    # Builds a Siamese model based on a base-model
+    """Custom Keras model implementing the Siamese training loop."""
+
     def __init__(self, siamese_network, margin=1.0):
         super(SiameseModel, self).__init__()
 

@@ -1,3 +1,5 @@
+"""Create darkened copies of images for data augmentation."""
+
 import cv2
 import numpy as np
 import os

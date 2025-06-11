@@ -1,3 +1,5 @@
+"""Simple prototype for image similarity prediction using Siamese network."""
+
 from keras.models import Model
 from keras.layers import (
     Input,

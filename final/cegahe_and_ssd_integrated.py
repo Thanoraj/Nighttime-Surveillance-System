@@ -1,4 +1,5 @@
 # Commented out IPython magic to ensure Python compatibility.
+"""Jupyter-exported script combining CLAHE enhancement and SSD detection."""
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt

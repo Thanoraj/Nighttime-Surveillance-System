@@ -1,3 +1,5 @@
+"""Minimal Flask test server for file uploads."""
+
 from flask import Flask, request, jsonify
 import os
 
@@ -10,6 +12,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route("/upload", methods=["POST"])
 def upload_file():
+    """Receive an image via POST and store it under ``static/test.jpg``."""
     image_raw_bytes = request.get_data()  # get the whole body
 
     save_location = os.path.join(

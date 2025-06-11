@@ -1,8 +1,11 @@
+"""Detect faces in images using OpenCV's Haar cascade."""
+
 import cv2
 import os
 
 
 def detect_faces(image, frame_count, human_count):
+    """Return bounding boxes for faces detected in ``image``."""
     face_cascade = cv2.CascadeClassifier(
         cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
     )

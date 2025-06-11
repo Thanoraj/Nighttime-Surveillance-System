@@ -1,3 +1,5 @@
+"""Flask server handling image uploads and DeepFace predictions."""
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
@@ -10,11 +12,13 @@ CORS(app)
 
 @app.route("/")
 def home():
+    """Simple health-check endpoint."""
     return "Hello world!"
 
 
 @app.route("/upload", methods=["POST"])
 def upload_file():
+    """Receive an image file and start a prediction thread."""
     try:
         if "image" not in request.files:
             print("No image part")
