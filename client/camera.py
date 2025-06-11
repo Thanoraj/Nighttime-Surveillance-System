@@ -1,39 +1,22 @@
-from cmath import log
-import cv2
-import time
+"""Example script demonstrating simple video recording using OpenCV.
 
-# Open a connection to the camera
-cap = cv2.VideoCapture(0)  # '0' is typically the index for the first camera
+This script relies on :mod:`camera_utils` to handle camera connection,
+recording, and cleanup. It records five seconds of video from the first
+available camera and saves it as ``output.mp4``.
+"""
 
-if not cap.isOpened():
-    print("Error: Could not open video device.")
-    exit()
+from camera_utils import open_camera, start_writer, record, release
 
-# Set video frame dimensions (optional)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-# Define the codec and create VideoWriter object
-fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # Use 'mp4v' for MP4 files
-out = cv2.VideoWriter("output.mp4", fourcc, 20.0, (640, 480))
+def main() -> None:
+    """Record a short video from the default camera."""
+    cap = open_camera()  # Connect to the first camera
+    writer = start_writer("output.mp4", (640, 480))
+    try:
+        record(cap, writer, duration=5)
+    finally:
+        release(cap, writer)
 
-start_time = time.time()
 
-print("Started Capturing")
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        print("Error: Failed to capture image.")
-        break
-
-    out.write(frame)  # Write the frame to the file
-
-    # Break the loop after 5 seconds
-    if time.time() - start_time > 5:
-        break
-
-print("Finished Capturing")
-
-# Release everything when done
-cap.release()
-out.release()
+if __name__ == "__main__":
+    main()
