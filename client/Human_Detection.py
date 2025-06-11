@@ -1,3 +1,10 @@
+"""Utilities for detecting humans in images using an SSD MobileNet model.
+
+The module loads a TensorFlow model from ``ssd_mobilenet_v2`` and exposes a
+``detect_human`` function that crops out detected people from an image and saves
+them to disk.
+"""
+
 import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
@@ -6,7 +13,17 @@ from PIL import Image
 local_model_dir = "ssd_mobilenet_v2"
 model = hub.load(local_model_dir)
 
+
 def detect_human(image_path, frame_count):
+    """Detect and crop people from ``image_path`` using SSD MobileNet.
+
+    Parameters
+    ----------
+    image_path : str
+        Path to the input image.
+    frame_count : int
+        Index used when naming saved crops.
+    """
     image = Image.open(image_path)
     image_np = np.array(image)
 

@@ -1,3 +1,5 @@
+"""Simple LED blink script used for testing GPIO."""
+
 import RPi.GPIO as GPIO
 import time
 
@@ -6,6 +8,7 @@ input_pin = 18  # BCM pin 18, BOARD pin 12
 
 
 def main():
+    """Flash an LED when the input pin goes high."""
     prev_value = None
 
     # Pin Setup:

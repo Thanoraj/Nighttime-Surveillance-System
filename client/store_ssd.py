@@ -1,9 +1,12 @@
+"""Utility to download and store the SSD MobileNet model locally."""
+
 import tensorflow as tf
 import tensorflow_hub as hub
 import os
 
 
 def install_ssd():
+    """Download the SSD model into ``ssd_mobilenet_v2`` directory."""
     # Directory to save the model
     local_model_dir = "ssd_mobilenet_v2"
 

@@ -1,3 +1,5 @@
+"""Demo of face detection with CLAHE enhancement and SSD model."""
+
 # Commented out IPython magic to ensure Python compatibility.
 import cv2
 import numpy as np

@@ -1,3 +1,5 @@
+"""Utility for enhancing low-light face images using CLAHE."""
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt

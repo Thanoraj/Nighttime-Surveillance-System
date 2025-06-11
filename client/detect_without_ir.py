@@ -1,3 +1,5 @@
+"""Surveillance script that runs without infrared sensor triggers."""
+
 import signal
 import sys
 import json
@@ -17,6 +19,7 @@ from store_ssd import install_ssd
 
 # Signal handler for graceful exit on keyboard interrupt
 def signal_handler(sig, frame):
+    """Gracefully stop processing when a SIGINT is received."""
     print("Interrupt received, stopping...")
     global running
     running = False
@@ -27,6 +30,7 @@ signal.signal(signal.SIGINT, signal_handler)
 
 
 def send_image(image_path, server_url):
+    """Upload ``image_path`` to ``server_url`` via HTTP POST."""
     print(image_path.split("/")[-1])
 
     files = {
@@ -45,6 +49,7 @@ def send_image(image_path, server_url):
 
 
 def detect_faces(image, frame_count, human_count):
+    """Detect faces in ``image`` and send them to the server."""
     face_cascade = cv2.CascadeClassifier(
         cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
     )
@@ -67,6 +72,7 @@ def detect_faces(image, frame_count, human_count):
 
 
 def detect_human(image_np, frame_count):
+    """Detect people in a frame and process their faces."""
     image_tensor = tf.convert_to_tensor(image_np, dtype=tf.uint8)
     image_tensor = tf.expand_dims(image_tensor, 0)
     results = model(image_tensor)
@@ -106,6 +112,7 @@ def detect_human(image_np, frame_count):
 
 
 def producer(cap, frame_queue, start_time, duration=1, every_n_frame=5):
+    """Read frames from ``cap`` and place them on ``frame_queue``."""
     frame_count = 0
     while cap.isOpened() and running:
         ret, frame = cap.read()
@@ -118,6 +125,7 @@ def producer(cap, frame_queue, start_time, duration=1, every_n_frame=5):
 
 
 def process_frame(frame, frame_count):
+    """Enhance a frame and detect humans."""
     gray_img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     equalized_image = cv2.equalizeHist(gray_img)
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
@@ -130,6 +138,7 @@ def process_frame(frame, frame_count):
 
 
 def process_video(cap, start_time, num_workers=4):
+    """Run producers and workers to process frames from the camera."""
     print("Processing video")
     frame_queue = queue.Queue(maxsize=20)
     producer_executor = ThreadPoolExecutor(max_workers=1)
@@ -144,6 +153,7 @@ def process_video(cap, start_time, num_workers=4):
 
 # Function to test video capture on a given index
 def test_video_device(index):
+    """Return ``True`` if camera ``index`` can be opened."""
     cap = cv2.VideoCapture(index)
     if not cap.isOpened():
         print(f"Error: Could not open video device {index}.")
@@ -158,6 +168,7 @@ def test_video_device(index):
 
 
 def capture(cap):
+    """Capture frames from ``cap`` and run processing pipelines."""
     # cam_index = 0
     # # Test both devices
     # for index in range(2):
@@ -185,6 +196,7 @@ def capture(cap):
 
 
 def initialize():
+    """Setup model and start capturing from the default camera."""
     global model, cap, running
 
     running = True

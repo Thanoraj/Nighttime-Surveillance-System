@@ -1,8 +1,11 @@
+"""Utility script for verifying that connected cameras work with OpenCV."""
+
 import cv2
 
 
 # Function to test video capture on a given index
 def test_video_device(index):
+    """Return ``True`` if video device ``index`` can be read."""
     cap = cv2.VideoCapture(index)
     if not cap.isOpened():
         print(f"Error: Could not open video device {index}.")
